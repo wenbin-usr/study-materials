@@ -236,19 +236,14 @@ tool_calls=[] invalid_tool_calls=[] usage_metadata={'input_tokens':
 
 所以如果真正要大模型根据工具调用结果进行回复，完整的调用流程包括如下四个步骤：
 
-步骤1：模型绑定工具：通过model.bind_tools([...])绑定一个或者多个工具。
+- 步骤1：模型绑定工具：通过model.bind_tools([...])绑定一个或者多个工具。
 
-步骤2：模型生成工具调用请求：用户输入问题，调用模型（比如invoke()）。如果需要调用工具，模
+- 步骤2：模型生成工具调用请求：用户输入问题，调用模型（比如invoke()）。如果需要调用工具，模型返回包含工具调用信息（如工具名称和参数）的AIMessage。
 
-型返回包含工具调用信息（如工具名称和参数）的AIMessage。
+- 步骤3：开发者手动执行工具：用户从响应中提取工具调用信息并手动调用对应的工具（比如工具.invoke()）。
 
-步骤3：开发者手动执行工具：用户从响应中提取工具调用信息并手动调用对应的工具（比如工
+- 步骤4：将工具执行结果ToolMessage传递给模型生成最终结果：将之前用户提问内容和手动执行工具结果ToolMessage返回模型，模型最终生成回复。
 
-具.invoke()）。
-
-步骤4：将工具执行结果ToolMessage传递给模型生成最终结果：将之前用户提问内容和手动执行工具
-
-结果ToolMessage返回模型，模型最终生成回复。
 
 特别注意：大模型调用工具是单次推理，直接响应，**需要开发者手动执行工具**并管理循环，适合简单、确定的任务。
 
@@ -442,11 +437,10 @@ rprint(convert_to_openai_tool(get_weather))
 
 convert_to_openai_tool 会从docstring 加载参数说明，这里的docstring 必须遵循Google 风格。
 
-Google 风格docstring 说明：https://google.github.io/styleguide/pyguide.html Google 风格docstring 示例：https://www.sphinx-doc.org/en/master/usage/extensions/exa
+- Google 风格docstring 说明：https://google.github.io/styleguide/pyguide.html
+- Google 风格docstring 示例：https://www.sphinx-doc.org/en/master/usage/extensions/example_google.html
+- Python docstring 通用约定：https://peps.python.org/pep-0257/
 
-mple_google.html
-
-Python docstring 通用约定：https://peps.python.org/pep-0257/
 
 基础用法不必完整阅读规范，只需要按照下面的示例仿写即可。
 
