@@ -673,9 +673,7 @@ def get_weather(city: str):
 print(convert_to_openai_tool(get_weather))
 ```
 
-@tool 会从docstring 生成描述信息，同样要求遵循Google docstring 规范。如果没有docstring
-
-则报错，如下。
+@tool 会从docstring 生成描述信息，同样要求遵循Google docstring 规范。如果没有docstring则报错，如下。
 
 ```
 Traceback...
